@@ -1,0 +1,8 @@
+type Block @entity {
+  id: ID!
+
+  number: BigInt
+  timestamp: Date
+  parentHash: String
+  specVersion: Int
+}
