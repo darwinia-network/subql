@@ -5,4 +5,95 @@ type Block @entity {
   timestamp: Date
   parentHash: String
   specVersion: Int
+
+  extrinsics: [Extrinsic] @derivedFrom(field: "block")
+  events: [Event] @derivedFrom(field: "block")
+}
+
+type Extrinsic @entity {
+  id: ID!
+
+  method: String
+  section: String
+  args: String
+  signer: Account #create relation to account
+  nonce: BigInt
+  timestamp: Date
+  signature: String
+  tip: BigInt
+  isSigned: Boolean
+  isSuccess: Boolean
+
+  block: Block #create relation to block
+  events: [Event] @derivedFrom(field: "extrinsic")
+  calls: [Call] @derivedFrom(field: "extrinsic")
+}
+
+type Event @entity {
+  id: ID!
+
+  index: Int!
+  section: String!
+  method: String!
+  data: String!
+
+  block: Block #create relation to block
+  extrinsic: Extrinsic #create relation to extrinsic
+}
+
+type Call @entity {
+  id: ID!
+
+  section: String
+  method: String
+  args: String
+  timestamp: Date
+  isSuccess: Boolean
+
+  signer: Account #create ration to account
+  extrinsic: Extrinsic #create relation to extrinsic
+  parentCall: Call #create relation to call
+  calls: [Call] @derivedFrom(field: "parentCall")
+}
+
+type Account @entity {
+  id: ID!
+
+  extrinsics: [Extrinsic] @derivedFrom(field: "signer")
+  calls: [Call] @derivedFrom(field: "signer")
+
+  transferIn: [Transfer] @derivedFrom(field: "to")
+  transferOut: [Transfer] @derivedFrom(field: "from")
+  position: [LoanPosition] @derivedFrom(field: "account")
+}
+
+type Token @entity {
+  id: ID!
+
+  decimal: Int
+  name: String
+}
+
+type Transfer @entity {
+  id: ID!
+
+  from: Account
+  to: Account
+  token: Token
+  amount: BigInt
+
+  extrinsic: Extrinsic #create relation to extrinsic
+  call: Call #create relation to call
+  timestamp: Date
+  isSuccess: Boolean
+}
+
+type LoanPosition @entity {
+  id: ID!
+
+  account: Account
+  token: Token
+
+  debit: BigInt
+  collateral: BigInt
 }

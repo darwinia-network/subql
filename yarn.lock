@@ -1079,15 +1079,15 @@
     "@types/websocket" "^1.0.2"
     websocket "^1.0.33"
 
-"@subql/cli@^0.8.0":
-  version "0.8.0"
-  resolved "https://registry.yarnpkg.com/@subql/cli/-/cli-0.8.0.tgz#54d81d9f748c67065788311b02bf461d95cd4297"
-  integrity sha512-xOePjtCiWkD4HJJ6hoOUJkyKhM7kY5ofcWSfQfv7IlusT8WNB+nztFmyHXS8ao+REM4yVb0jjpubEPSzv6mBzw==
+"@subql/cli@0.9.1":
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/@subql/cli/-/cli-0.9.1.tgz#15977c9607385c9406413b4c8e94735a24c0980b"
+  integrity sha512-EC618ukPaZtJL8vPjcLOGbP6rE/VrNcwp1450AZynxTdcqUSdOqznbLzykrwmqMDJvBJkWCVTk2QloPQJpUTZg==
   dependencies:
     "@oclif/command" "^1.8.0"
     "@oclif/config" "^1.17.0"
     "@oclif/plugin-help" "^3.2.1"
-    "@subql/common" "0.7.0"
+    "@subql/common" "0.8.1"
     "@subql/validator" "0.1.0"
     "@types/ejs" "^3.0.5"
     chalk "^4.1.0"
@@ -1097,10 +1097,10 @@
     simple-git "^2.31.0"
     tslib "^2.1.0"
 
-"@subql/common@0.7.0":
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/@subql/common/-/common-0.7.0.tgz#a28abed23e3d54dc7ea91f3f24226da522f032ae"
-  integrity sha512-NqWguWHj4pMVbswYhV7qamu65FsfSYeGdvP9FFYFRSUohPykavkxxoMm5E3GkSlTiilRRFfD/IaAbD7lRuBQGg==
+"@subql/common@0.8.1":
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/@subql/common/-/common-0.8.1.tgz#bf63291848729c865bf283d50d2bb665b6061d46"
+  integrity sha512-+wTBscPSsFBWanfAgzVw8SuD34ICdlOAgENC2a2KEdA+NOc08DFTVYLY7g7HYONzWWhQ+EQXKGqbbIRNFGXZ5g==
   dependencies:
     class-transformer "0.3.1"
     class-validator "^0.13.1"
@@ -1112,10 +1112,10 @@
     pino "^6.11.1"
     reflect-metadata "^0.1.13"
 
-"@subql/types@^0.6.1":
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/@subql/types/-/types-0.6.1.tgz#8c5417c36b3602c66ed8f7900620e6886ca85433"
-  integrity sha512-WcSg4cREzbEUj10KraCzMhbFsgkXRnt7BBcfUmfFljEII+C4uEzMvFwHH/3Vds1D6uCRXDourO5nIdrnLNBD8Q==
+"@subql/types@0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@subql/types/-/types-0.7.1.tgz#517a5e6d22b8170e40e0ddf2efbc4d7e362cff7c"
+  integrity sha512-wqPRiPZFDIjmcuEmfEMdKKmYqReZcS2Fx5ocMfLNUYlYWx7dhu+4rNwPZMgPYOpSw4NsS/DeDfp0hRqXAIPkLw==
 
 "@subql/validator@0.1.0":
   version "0.1.0"

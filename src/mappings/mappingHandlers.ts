@@ -1,17 +1,18 @@
 import { SubstrateBlock, SubstrateEvent, SubstrateExtrinsic } from "@subql/types";
-import { BlockHandler } from "../handlers/block";
+import { ExtrinsicHandler } from "../handlers";
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
-  const handler = new BlockHandler(block);
-  console.log("%c [ block ]-9", "font-size:13px; background:pink; color:#bf2c9f;", block);
+  // const handler = new BlockHandler(block);
 
-  await handler.save();
+  // await handler.save();
 }
 
 export async function handleEvent(event: SubstrateEvent): Promise<void> {
-  console.log("%c [ event ]-15", "font-size:13px; background:pink; color:#bf2c9f;", event);
+
 }
 
 export async function handleCall(extrinsic: SubstrateExtrinsic): Promise<void> {
-  console.log("%c [ extrinsic ]-19", "font-size:13px; background:pink; color:#bf2c9f;", extrinsic);
+  const handler = new ExtrinsicHandler(extrinsic);
+
+  await handler.save();
 }
