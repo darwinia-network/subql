@@ -3,7 +3,7 @@ description: ""
 repository: ""
 schema: ./schema.graphql
 network:
-  endpoint: wss://pangolin-rpc.darwinia.network/
+  endpoint: wss://rpc.darwinia.network/
   types:
     UsableBalance:
       usableBalance: Balance
@@ -237,18 +237,15 @@ network:
     PowerOf:
       power: Power
     BabeEpochConfiguration: "Null"
-    ValidatorPrefs: 'ValidatorPrefsWithBlocked'
-    SignedBlock: 'SignedBlockWithJustifications'
-    SignedBlockWithJustifications: 
-      block: 'Block'
-      justifications: 'Option<Justifications>'
-    Justifications: 'Vec<Justification>'
-    Justification: '(ConsensusEngineId, EncodedJustification)'
-    EncodedJustification: 'Bytes'
+    ValidatorPrefs: ValidatorPrefsWithBlocked
+    SignedBlock:
+      block: Block
+      justification: Justification
+    Justification: Bytes
 dataSources:
   - name: main
     kind: substrate/Runtime
-    startBlock: 15000
+    startBlock: 3008000
     mapping:
       handlers:
         - handler: handleBlock

@@ -1,10 +1,5 @@
 import { Account } from "../../types/models/Account";
 
-// interface AccountData {
-//   id: string;
-//   address: string;
-// }
-
 export class AccountHandler {
   static async ensureAccount(id: string) {
     const account = await Account.get(id);
