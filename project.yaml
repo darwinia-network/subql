@@ -3,7 +3,7 @@ description: ""
 repository: ""
 schema: ./schema.graphql
 network:
-  endpoint: wss://rpc.darwinia.network/
+  endpoint: wss://crab-rpc.darwinia.network/
   types:
     UsableBalance:
       usableBalance: Balance
@@ -11,8 +11,9 @@ network:
       _enum:
         Free: "Null"
         Reserved: "Null"
-    Address: AccountId
-    LookupSource: AccountId
+    Address: MultiAddress
+    LookupSource: MultiAddress
+    MultiAddress: GenericMultiAddress
     BalanceInfo: "{}"
     BalanceLock:
       id: LockIdentifier
@@ -172,9 +173,12 @@ network:
       ss58Format: Option<u8>
       tokenDecimals: Option<Vec<u32>>
       tokenSymbol: Option<Vec<Text>>
-    AccountInfo:
+    AccountInfo: AccountInfoWithTripleRefCount
+    AccountInfoWithTripleRefCount:
       nonce: Index
-      refcount: RefCount
+      consumers: RefCount
+      providers: RefCount
+      sufficients: RefCount
       data: AccountData
     Signer: EthereumAddress
     RelayAuthorityT:
@@ -238,14 +242,10 @@ network:
       power: Power
     BabeEpochConfiguration: "Null"
     ValidatorPrefs: ValidatorPrefsWithBlocked
-    SignedBlock:
-      block: Block
-      justification: Justification
-    Justification: Bytes
 dataSources:
   - name: main
     kind: substrate/Runtime
-    startBlock: 3008000
+    startBlock: 4985000
     mapping:
       handlers:
         - handler: handleBlock
