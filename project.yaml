@@ -11,8 +11,6 @@ network:
       _enum:
         Free: "Null"
         Reserved: "Null"
-    Address: AccountId
-    LookupSource: AccountId
     BalanceInfo: "{}"
     BalanceLock:
       id: LockIdentifier
@@ -238,10 +236,42 @@ network:
       power: Power
     BabeEpochConfiguration: "Null"
     ValidatorPrefs: ValidatorPrefsWithBlocked
-    SignedBlock:
-      block: Block
-      justification: Justification
-    Justification: Bytes
+  typesBundle:
+    spec:
+      Darwinia:
+        types:
+          - minmax:
+              - 0
+              - 22
+            types:
+              Address: AccountId
+              LookupSource: AccountId
+          - minmax:
+              - 23
+              - 24
+            types:
+              Address: MultiAddress
+              LookupSource: MultiAddress
+              MultiAddress: GenericMultiAddress
+              AccountInfo: AccountInfoWithTripleRefCount
+              AccountInfoWithTripleRefCount:
+                nonce: Index
+                consumers: RefCount
+                providers: RefCount
+                data: AccountData
+          - minmax:
+              - 24
+            types:
+              Address: MultiAddress
+              LookupSource: MultiAddress
+              MultiAddress: GenericMultiAddress
+              AccountInfo: AccountInfoWithTripleRefCount
+              AccountInfoWithTripleRefCount:
+                nonce: Index
+                consumers: RefCount
+                providers: RefCount
+                sufficients: RefCount
+                data: AccountData
 dataSources:
   - name: main
     kind: substrate/Runtime
