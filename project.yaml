@@ -242,6 +242,105 @@ network:
       power: Power
     BabeEpochConfiguration: "Null"
     ValidatorPrefs: ValidatorPrefsWithBlocked
+    PalletId: LockIdentifier
+    LaneId: "[u8; 4]"
+    MessageNonce: u64
+    MessageId: "(LaneId, MessageNonce)"
+    MessagePayload: Vec<u8>
+    MessageData:
+      payload: MessagePayload
+      fee: Fee
+    MessageKey: 
+      laneId: LaneId
+      nonce: MessageNonce
+    MessagesDeliveryProofOf:
+      bridged_header_hash: BridgedBlockHash
+      storage_proof: Vec<StorageProofItem>
+      lane: LaneId
+    MessagesProofOf:
+      bridged_header_hash: BridgedBlockHash
+      storage_proof: Vec<StorageProofItem>
+      lane: LaneId
+      nonces_start: MessageNonce
+      nonces_end: MessageNonce
+    StorageProofItem: Vec<u8>
+    BridgedBlockHash: H512
+    BridgedBlockNumber: u64
+    AuthoritySet: 
+      authorities: AuthorityList
+      set_id: SetId
+    BridgedHeader: MillauHeader
+    MillauHeader:
+      parent_Hash: MillauBlockHash,
+      number: Compact<MillauBlockNumber>,
+      state_root: MillauBlockHash,
+      extrinsics_root: MillauBlockHash,
+      digest: MillauDigest
+    MillauBlockHash: H512
+    MillauBlockNumber: u64
+    MillauDigest: 
+      logs: Vec<MillauDigestItem>
+    MillauDigestItem: 
+      _enum: 
+        Other: Vec<u8>
+        AuthoritiesChange: Vec<AuthorityId>
+        ChangesTrieRoot: MillauBlockHash
+        SealV0: SealV0
+        Consensus: Consensus
+        Seal: Seal
+        PreRuntime: PreRuntime
+    ChainId: "[u8; 4]"
+    GrandpaJustification: 
+      round: u64
+      commit: Commit
+      votes_ancestries: Vec<BridgedHeader>
+    Commit:
+      target_hash: BridgedBlockHash
+      target_number: BridgedBlockNumber
+      precommits: Vec<SignedPrecommit>
+    SignedPrecommit: 
+      precommit: Precommit
+      signature: AuthoritySignature
+      id: AuthorityId
+    Precommit: 
+      target_hash: BridgedBlockHash
+      target_number: BridgedBlockNumber
+    AuthoritySignature: "[u8;64]"
+    AuthorityId: "[u8;32]"
+    InboundLaneData:
+      relayers: Vec<(MessageNonce, MessageNonce, RelayerId)>
+      last_confirmed_nonce: MessageNonce
+    RelayerId: AccountId
+    InboundRelayer: AccountId
+    OutboundLaneData:
+      latest_generated_nonce: MessageNonce
+      latest_received_nonce: MessageNonce
+      oldest_unpruned_nonce: MessageNonce
+    OutboundMessageFee: Fee
+    OutboundPayload:
+      spec_version: SpecVersion
+      weight: Weight
+      origin: CallOrigin
+      call: BridgedOpaqueCall
+    SpecVersion: u32
+    BridgedOpaqueCall: Vec<u8>
+    CallOrigin:
+      _enum:
+        SourceRoot: "()"
+        TargetAccount: "(SourceAccountId, MultiSigner, MultiSignature)"
+        SourceAccount: SourceAccountId
+    Parameter: 
+      _enum: 
+        MillauToRialtoConversionRate: u128
+    UnrewardedRelayersState:
+      unrewarded_relayer_entries: MessageNonce
+      messages_in_oldest_entry: MessageNonce
+      total_messages: MessageNonce
+    InitializationData:
+      header: Header
+      authority_list: AuthorityList
+      set_id: SetId
+      is_halted: bool
 dataSources:
   - name: main
     kind: substrate/Runtime
