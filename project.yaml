@@ -271,10 +271,10 @@ network:
       set_id: SetId
     BridgedHeader: MillauHeader
     MillauHeader:
-      parent_Hash: MillauBlockHash,
-      number: Compact<MillauBlockNumber>,
-      state_root: MillauBlockHash,
-      extrinsics_root: MillauBlockHash,
+      parent_Hash: MillauBlockHash
+      number: Compact<MillauBlockNumber>
+      state_root: MillauBlockHash
+      extrinsics_root: MillauBlockHash
       digest: MillauDigest
     MillauBlockHash: H512
     MillauBlockNumber: u64
@@ -344,7 +344,7 @@ network:
 dataSources:
   - name: main
     kind: substrate/Runtime
-    startBlock: 30700
+    startBlock: 5000
     mapping:
       handlers:
         - handler: handleBlock
