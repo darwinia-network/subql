@@ -12,6 +12,8 @@ export class Account implements Entity {
 
     public id: string;
 
+    public transferTotalCount?: number;
+
 
     async save(): Promise<void>{
         let id = this.id;
