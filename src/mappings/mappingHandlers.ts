@@ -3,7 +3,6 @@ import { BlockHandler, ExtrinsicHandler, EventHandler } from '../handlers';
 
 export async function handleBlock(block: SubstrateBlock): Promise<void> {
   const handler = new BlockHandler(block);
-  console.log(block.specVersion);
 
   await handler.save();
 }

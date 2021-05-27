@@ -5,7 +5,12 @@ export class AccountHandler {
     const account = await Account.get(id);
 
     if (!account) {
-      return new Account(id).save();
+      const acc =  new Account(id);
+      
+      acc.transferTotalCount = 0; 
+      acc.save();
+
+      return acc;
     }
   }
 
@@ -20,10 +25,16 @@ export class AccountHandler {
   static async updateAccount(id: string, data: Record<string, any>) {
     const account = await this.getAccountById(id);
 
-    Object.keys(data).forEach((key, value) => {
+    Object.entries(data).forEach(([key, value]) => {
       account[key] = value;
     });
 
     await account.save();
+  }
+
+  static async updateTransferStatistic(id: string) {
+    const account = await this.getAccountById(id);
+
+    await this.updateAccount(id, { transferTotalCount: account.transferTotalCount + 1 });
   }
 }

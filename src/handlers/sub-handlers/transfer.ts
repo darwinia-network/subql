@@ -22,7 +22,9 @@ export class TransferHandler {
     const [from, to, amount] = JSON.parse(data.toString());
 
     await AccountHandler.ensureAccount(to);
+    await AccountHandler.updateTransferStatistic(to);
     await AccountHandler.ensureAccount(from);
+    await AccountHandler.updateTransferStatistic(from);
     await TokenHandler.ensureToken(section);
     await BlockHandler.ensureBlock(block.hash.toString());
 
