@@ -45,7 +45,7 @@ type Event @entity {
 type Account @entity {
   id: ID!
 
-  transferTotalCount(orderBy: AccountOrderByInput): Int
+  transferTotalCount: Int
 
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
   transferIn: [Transfer] @derivedFrom(field: "to")
