@@ -32,7 +32,15 @@ export class ExtrinsicHandler {
   }
 
   get args(): string {
-    return this.extrinsic?.extrinsic?.args?.toString();
+    const { args, meta } = this.extrinsic?.extrinsic || {};
+    const { args: argsDef } = meta;
+    const result = args.map((arg, index) => {
+      const { name, type } = argsDef[index];
+
+      return { name, type, value: arg.toHuman() };
+    });
+
+    return JSON.stringify(result);
   }
 
   get signer(): string {
