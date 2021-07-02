@@ -33,7 +33,7 @@ export class TransferHandler {
     transfer.toId = to;
     transfer.fromId = from;
     transfer.tokenId = section;
-    transfer.amount = amount;
+    transfer.amount = BigInt(amount);
     transfer.timestamp = timestamp;
     transfer.blockNumber = block.header.number.toBigInt();
     transfer.blockId = block.hash.toString();
