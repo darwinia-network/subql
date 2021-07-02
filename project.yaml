@@ -285,7 +285,7 @@ network:
     Signer: EthereumAddress
     RelayAuthorityT:
       accountId: AccountId
-      signer: Signer
+      signer: EthereumAddress
       stake: Balance
       term: BlockNumber
     MMRRoot: Hash
@@ -346,6 +346,38 @@ network:
     ValidatorPrefs: ValidatorPrefsWithBlocked
     RawSolution: RawSolutionWith16
     CompactAssignments: CompactAssignmentsWith16
+    AuthoritySignature: "[u8;64]"
+    AuthorityId: "[u8;32]"
+    InitializationData:
+      header: Header
+      authority_list: AuthorityList
+      set_id: SetId
+      is_halted: bool
+    BlockNumberFor: BlockNumber
+    NodeIndex: u64
+    MmrNodesPruningConfiguration:
+      step: NodeIndex
+      progress: NodeIndex
+      lastPosition: NodeIndex
+    BSCHeader:
+      parentHash: H256
+      uncleHash: H256
+      coinbase: EthereumAddress
+      stateRoot: H256
+      transactionsRoot: H256
+      receiptsRoot: H256
+      logBloom: Bloom
+      difficulty: U256
+      number: u64
+      gasLimit: U256
+      gasUsed: U256
+      timestamp: u64
+      extraData: Bytes
+      mixDigest: H256
+      nonce: Bytes
+    MmrRootToSign:
+      mmrRoot: Hash
+      signatures: Vec<(EthereumAddress, EcdsaSignature)>
   typesBundle:
     spec:
       Darwinia:
