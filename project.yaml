@@ -118,6 +118,7 @@ network:
       gasLimit: U256
       difficulty: U256
       seal: Vec<Bytes>
+      baseFeePerGas: Option<U256>
       blockHash: Option<H256>
     EthereumAddress: H160
     Bloom: "[u8; 256; Bloom]"
@@ -132,7 +133,7 @@ network:
       outcome: TransactionOutcome
     LogEntry: "{}"
     TransactionOutcome: "{}"
-    EthereumNetworkType:
+    EthereumNetwork:
       _enum:
         Mainnet: "Null"
         Ropsten: "Null"
@@ -245,7 +246,7 @@ network:
     PalletId: LockIdentifier
     LaneId: "[u8; 4]"
     MessageNonce: u64
-    MessageId: "(LaneId, MessageNonce)"
+    MessageId: "(Id, MessageNonce)"
     MessagePayload: Vec<u8>
     MessageData:
       payload: MessagePayload
@@ -264,8 +265,8 @@ network:
       nonces_start: MessageNonce
       nonces_end: MessageNonce
     StorageProofItem: Vec<u8>
-    BridgedBlockHash: H512
-    BridgedBlockNumber: u64
+    BridgedBlockHash: MillauBlockHash
+    BridgedBlockNumber: MillauBlockNumber
     AuthoritySet: 
       authorities: AuthorityList
       set_id: SetId
@@ -366,6 +367,25 @@ network:
     MmrRootToSign:
       mmrRoot: Hash
       signatures: Vec<(EthereumAddress, EcdsaSignature)>
+    Fee: MillauBalance
+    MillauBalance: u64
+    MessageFeeData: 
+      lane_id: LaneId
+      payload: OutboundPayload
+    AncestryProof: "()"
+    MultiSigner: 
+      _enum: 
+        Ed25519: H256
+        Sr25519: H256
+        Ecdsa: "[u8;33]"
+    Id: "[u8; 4]"
+    ImportedHeader: 
+      header: BridgedHeader
+      requires_justification: bool
+      is_finalized: bool
+      signal_hash: Option<BridgedBlockHash>
+    SourceAccountId: AccountId
+    AccountSigner: MultiSigner
 dataSources:
   - name: main
     kind: substrate/Runtime
