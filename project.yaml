@@ -16,7 +16,7 @@ dataSources:
     startBlock: 5000
 description: ''
 network:
-  endpoint: wss://pangolin-rpc.darwinia.network/
+  endpoint: wss://pangoro-rpc.darwinia.network/
   types:
     AccountData:
       feeFrozen: Balance
@@ -64,11 +64,12 @@ network:
       id: LockIdentifier
       lockFor: LockFor
       reasons: Reasons
+    BlockHash: PangoroBlockHash
     BlockNumberFor: BlockNumber
     Bloom: '[u8; 256; Bloom]'
-    BridgedBlockHash: MillauBlockHash
-    BridgedBlockNumber: MillauBlockNumber
-    BridgedHeader: MillauHeader
+    BridgedBlockHash: RialtoBlockHash
+    BridgedBlockNumber: RialtoBlockNumber
+    BridgedHeader: RialtoHeader
     BridgedOpaqueCall: Vec<u8>
     CallOrigin:
       _enum:
@@ -149,7 +150,7 @@ network:
       ownPower: Power
       totalPower: Power
       others: Vec<IndividualExposure>
-    Fee: MillauBalance
+    Fee: PangoroBalance
     GrandpaJustification:
       round: u64
       commit: Commit
@@ -182,7 +183,7 @@ network:
         Common: Common
         Staking: StakingLock
     LogEntry: '{}'
-    LookupSource: MultiAddress
+    LookupSource: Address
     MMRProof:
       memberLeafIndex: u64
       lastLeafIndex: u64
@@ -271,9 +272,29 @@ network:
       origin: CallOrigin
       call: BridgedOpaqueCall
     PalletId: LockIdentifier
+    PangoroBalance: Balance
+    PangoroBlockHash: Hash
+    PangoroBlockNumber: BlockNumber
+    PangoroHeader: 
+      parentHash: PangoroBlockHash
+      number: Compact<PangoroBlockNumber>
+      stateRoot: PangoroBlockHash
+      extrinsicsRoot: PangoroBlockHash
+      digest: PangoroDigest
+    PangoroDigest: 
+      logs: Vec<PangoroDigestItem>
+    PangoroDigestItem: 
+      _enum: 
+        Other: Vec<u8>
+        AuthoritiesChange: Vec<AuthorityId>
+        ChangesTrieRoot: PangoroBlockHash
+        SealV0: SealV0
+        Consensus: Consensus
+        Seal: Seal
+        reRuntime: PreRuntime
     Parameter:
       _enum:
-        MillauToRialtoConversionRate: u128
+        PangoroToRialtoConversionRate: u128
     Power: u32
     PowerOf:
       power: Power
@@ -299,6 +320,26 @@ network:
     RKT:
       r: Balance
       k: Balance
+    RialtoBalance: u128
+    RialtoBlockHash: H256
+    RialtoBlockNumber: u32
+    RialtoHeader: 
+      parentHash: RialtoBlockHash
+      number: Compact<RialtoBlockNumber>
+      stateRoot: RialtoBlockHash
+      extrinsicsRoot: RialtoBlockHash
+      digest: RialtoDigest
+    RialtoDigest: 
+      logs: Vec<RialtoDigestItem>
+    RialtoDigestItem: 
+      _enum: 
+        Other: Vec<u8>
+        AuthoritiesChange: Vec<AuthorityId>
+        ChangesTrieRoot: RialtoBlockHash
+        SealV0: SealV0
+        Consensus: Consensus
+        Seal: Seal
+        PreRuntime: PreRuntime
     Reasons:
       _enum:
         - Fee
