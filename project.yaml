@@ -32,15 +32,10 @@ network:
       nonce: Index
       providers: RefCount
       sufficients: RefCount
-    AccountSigner: MultiSigner
     Address: MultiAddress
     AddressT: '[u8; 20; AddressT]'
-    AncestryProof: ()
     Announcement: ProxyAnnouncement
     AuthorityId: '[u8;32]'
-    AuthoritySet:
-      authorities: AuthorityList
-      set_id: SetId
     AuthoritySignature: '[u8;64]'
     BSCHeader:
       parentHash: H256
@@ -64,27 +59,12 @@ network:
       id: LockIdentifier
       lockFor: LockFor
       reasons: Reasons
-    BlockHash: PangoroBlockHash
     BlockNumberFor: BlockNumber
     Bloom: '[u8; 256; Bloom]'
-    BridgedBlockHash: RialtoBlockHash
-    BridgedBlockNumber: RialtoBlockNumber
-    BridgedHeader: RialtoHeader
-    BridgedOpaqueCall: Vec<u8>
-    CallOrigin:
-      _enum:
-        SourceRoot: ()
-        TargetAccount: (SourceAccountId, MultiSigner, MultiSignature)
-        SourceAccount: SourceAccountId
-    ChainId: '[u8; 4]'
     ChainProperties:
       ss58Format: Option<u8>
       tokenDecimals: Option<Vec<u32>>
       tokenSymbol: Option<Vec<Text>>
-    Commit:
-      target_hash: BridgedBlockHash
-      target_number: BridgedBlockNumber
-      precommits: Vec<SignedPrecommit>
     Common:
       amount: Balance
     DepositId: U256
@@ -150,22 +130,7 @@ network:
       ownPower: Power
       totalPower: Power
       others: Vec<IndividualExposure>
-    Fee: PangoroBalance
-    GrandpaJustification:
-      round: u64
-      commit: Commit
-      votes_ancestries: Vec<BridgedHeader>
     H128: '[u8; 16; H128]'
-    Id: '[u8; 4]'
-    ImportedHeader:
-      header: BridgedHeader
-      requires_justification: bool
-      is_finalized: bool
-      signal_hash: Option<BridgedBlockHash>
-    InboundLaneData:
-      relayers: Vec<(MessageNonce, MessageNonce, RelayerId)>
-      last_confirmed_nonce: MessageNonce
-    InboundRelayer: AccountId
     IndividualExposure:
       who: AccountId
       ringBalance: Compact<Balance>
@@ -177,7 +142,6 @@ network:
       is_halted: bool
       set_id: SetId
     KtonBalance: Balance
-    LaneId: '[u8; 4]'
     LockFor:
       _enum:
         Common: Common
@@ -196,48 +160,6 @@ network:
     MerkleMountainRangeRootLog:
       prefix: '[u8; 4; Prefix]'
       ParentMmrRoot: Hash
-    MessageData:
-      payload: MessagePayload
-      fee: Fee
-    MessageFeeData:
-      lane_id: LaneId
-      payload: OutboundPayload
-    MessageId: (Id, MessageNonce)
-    MessageKey:
-      laneId: LaneId
-      nonce: MessageNonce
-    MessageNonce: u64
-    MessagePayload: Vec<u8>
-    MessagesDeliveryProofOf:
-      bridged_header_hash: BridgedBlockHash
-      storage_proof: Vec<StorageProofItem>
-      lane: LaneId
-    MessagesProofOf:
-      bridged_header_hash: BridgedBlockHash
-      storage_proof: Vec<StorageProofItem>
-      lane: LaneId
-      nonces_start: MessageNonce
-      nonces_end: MessageNonce
-    MillauBalance: u64
-    MillauBlockHash: H512
-    MillauBlockNumber: u64
-    MillauDigest:
-      logs: Vec<MillauDigestItem>
-    MillauDigestItem:
-      _enum:
-        Other: Vec<u8>
-        AuthoritiesChange: Vec<AuthorityId>
-        ChangesTrieRoot: MillauBlockHash
-        SealV0: SealV0
-        Consensus: Consensus
-        Seal: Seal
-        PreRuntime: PreRuntime
-    MillauHeader:
-      parent_Hash: MillauBlockHash
-      number: Compact<MillauBlockNumber>
-      state_root: MillauBlockHash
-      extrinsics_root: MillauBlockHash
-      digest: MillauDigest
     MmrNodesPruningConfiguration:
       step: NodeIndex
       progress: NodeIndex
@@ -246,11 +168,6 @@ network:
       mmrRoot: Hash
       signatures: Vec<(EthereumAddress, EcdsaSignature)>
     MultiAddress: GenericMultiAddress
-    MultiSigner:
-      _enum:
-        Ed25519: H256
-        Sr25519: H256
-        Ecdsa: '[u8;33]'
     NodeIndex: u64
     OpCode: '[u8; 4; OpCode]'
     OtherAddress:
@@ -261,46 +178,10 @@ network:
       _enum:
         Eth: EcdsaSignature
         Tron: EcdsaSignature
-    OutboundLaneData:
-      latest_generated_nonce: MessageNonce
-      latest_received_nonce: MessageNonce
-      oldest_unpruned_nonce: MessageNonce
-    OutboundMessageFee: Fee
-    OutboundPayload:
-      spec_version: SpecVersion
-      weight: Weight
-      origin: CallOrigin
-      call: BridgedOpaqueCall
     PalletId: LockIdentifier
-    PangoroBalance: Balance
-    PangoroBlockHash: Hash
-    PangoroBlockNumber: BlockNumber
-    PangoroHeader: 
-      parentHash: PangoroBlockHash
-      number: Compact<PangoroBlockNumber>
-      stateRoot: PangoroBlockHash
-      extrinsicsRoot: PangoroBlockHash
-      digest: PangoroDigest
-    PangoroDigest: 
-      logs: Vec<PangoroDigestItem>
-    PangoroDigestItem: 
-      _enum: 
-        Other: Vec<u8>
-        AuthoritiesChange: Vec<AuthorityId>
-        ChangesTrieRoot: PangoroBlockHash
-        SealV0: SealV0
-        Consensus: Consensus
-        Seal: Seal
-        reRuntime: PreRuntime
-    Parameter:
-      _enum:
-        PangoroToRialtoConversionRate: u128
     Power: u32
     PowerOf:
       power: Power
-    Precommit:
-      target_hash: BridgedBlockHash
-      target_number: BridgedBlockNumber
     ProxyAnnouncement:
       real: AccountId
       callHash: Hash
@@ -320,26 +201,6 @@ network:
     RKT:
       r: Balance
       k: Balance
-    RialtoBalance: u128
-    RialtoBlockHash: H256
-    RialtoBlockNumber: u32
-    RialtoHeader: 
-      parentHash: RialtoBlockHash
-      number: Compact<RialtoBlockNumber>
-      stateRoot: RialtoBlockHash
-      extrinsicsRoot: RialtoBlockHash
-      digest: RialtoDigest
-    RialtoDigest: 
-      logs: Vec<RialtoDigestItem>
-    RialtoDigestItem: 
-      _enum: 
-        Other: Vec<u8>
-        AuthoritiesChange: Vec<AuthorityId>
-        ChangesTrieRoot: RialtoBlockHash
-        SealV0: SealV0
-        Consensus: Consensus
-        Seal: Seal
-        PreRuntime: PreRuntime
     Reasons:
       _enum:
         - Fee
@@ -373,21 +234,14 @@ network:
     RelayVotingState:
       ayes: Vec<AccountId>
       nays: Vec<AccountId>
-    RelayerId: AccountId
     RingBalance: Balance
     ScheduledAuthoritiesChangeT:
       nextAuthorities: Vec<RelayAuthorityT>
       deadline: BlockNumber
-    SignedPrecommit:
-      precommit: Precommit
-      signature: AuthoritySignature
-      id: AuthorityId
     Signer: EthereumAddress
-    SourceAccountId: AccountId
     SpanRecord:
       slashed: RKT
       paidOut: RKT
-    SpecVersion: u32
     StakingBalanceT:
       _enum:
         RingBalance: Balance
@@ -408,7 +262,6 @@ network:
       _enum:
         Free: 'Null'
         Reserved: 'Null'
-    StorageProofItem: Vec<u8>
     Term: BlockNumber
     TimeDepositItem:
       value: Compact<Balance>
@@ -433,10 +286,6 @@ network:
     Unbonding:
       amount: Balance
       moment: BlockNumber
-    UnrewardedRelayersState:
-      unrewarded_relayer_entries: MessageNonce
-      messages_in_oldest_entry: MessageNonce
-      total_messages: MessageNonce
     UsableBalance:
       usableBalance: Balance
     ValidatorPrefs: ValidatorPrefsWithBlocked
