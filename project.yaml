@@ -32,7 +32,6 @@ network:
       nonce: Index
       providers: RefCount
       sufficients: RefCount
-    Address: MultiAddress
     AddressT: '[u8; 20; AddressT]'
     Announcement: ProxyAnnouncement
     AuthorityId: '[u8;32]'
@@ -59,7 +58,6 @@ network:
       id: LockIdentifier
       lockFor: LockFor
       reasons: Reasons
-    BlockNumberFor: BlockNumber
     Bloom: '[u8; 256; Bloom]'
     ChainProperties:
       ss58Format: Option<u8>
@@ -147,7 +145,6 @@ network:
         Common: Common
         Staking: StakingLock
     LogEntry: '{}'
-    LookupSource: MultiAddress
     MMRProof:
       memberLeafIndex: u64
       lastLeafIndex: u64
@@ -167,7 +164,6 @@ network:
     MmrRootToSign:
       mmrRoot: Hash
       signatures: Vec<(EthereumAddress, EcdsaSignature)>
-    MultiAddress: GenericMultiAddress
     NodeIndex: u64
     OpCode: '[u8; 4; OpCode]'
     OtherAddress:
@@ -182,14 +178,6 @@ network:
     Power: u32
     PowerOf:
       power: Power
-    ProxyAnnouncement:
-      real: AccountId
-      callHash: Hash
-      height: BlockNumber
-    ProxyDefinition:
-      delegate: AccountId
-      proxyType: ProxyType
-      delay: BlockNumber
     ProxyType:
       _enum:
         Any: 'Null'
