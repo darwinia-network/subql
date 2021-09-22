@@ -13,7 +13,7 @@ dataSources:
         - handler: handleCall
           kind: substrate/CallHandler
     name: main
-    startBlock: 5000
+    startBlock: 500000
 description: ''
 network:
   endpoint: wss://pangolin-rpc.darwinia.network/
