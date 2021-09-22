@@ -13,7 +13,7 @@ dataSources:
         - handler: handleCall
           kind: substrate/CallHandler
     name: main
-    startBlock: 500000
+    startBlock: 526300
 description: ''
 network:
   endpoint: wss://pangolin-rpc.darwinia.network/
@@ -157,6 +157,7 @@ network:
     MerkleMountainRangeRootLog:
       prefix: '[u8; 4; Prefix]'
       ParentMmrRoot: Hash
+    MessageId: (LaneId, MessageNonce)
     MmrNodesPruningConfiguration:
       step: NodeIndex
       progress: NodeIndex
@@ -230,6 +231,7 @@ network:
     SpanRecord:
       slashed: RKT
       paidOut: RKT
+    SpecVersion: u32
     StakingBalanceT:
       _enum:
         RingBalance: Balance
