@@ -32,7 +32,6 @@ network:
       nonce: Index
       providers: RefCount
       sufficients: RefCount
-    Address: MultiAddress
     AddressT: '[u8; 20; AddressT]'
     Announcement: ProxyAnnouncement
     AuthorityId: '[u8;32]'
@@ -59,8 +58,8 @@ network:
       id: LockIdentifier
       lockFor: LockFor
       reasons: Reasons
-    BlockNumberFor: BlockNumber
     Bloom: '[u8; 256; Bloom]'
+    BridgeMessageId: '[u8; 16; BridgeMessageId]'
     ChainProperties:
       ss58Format: Option<u8>
       tokenDecimals: Option<Vec<u32>>
@@ -136,18 +135,12 @@ network:
       ringBalance: Compact<Balance>
       ktonBalance: Compact<Balance>
       power: Power
-    InitializationData:
-      authority_list: AuthorityList
-      header: Header
-      is_halted: bool
-      set_id: SetId
     KtonBalance: Balance
     LockFor:
       _enum:
         Common: Common
         Staking: StakingLock
     LogEntry: '{}'
-    LookupSource: Address
     MMRProof:
       memberLeafIndex: u64
       lastLeafIndex: u64
@@ -160,6 +153,7 @@ network:
     MerkleMountainRangeRootLog:
       prefix: '[u8; 4; Prefix]'
       ParentMmrRoot: Hash
+    MessageId: (LaneId, MessageNonce)
     MmrNodesPruningConfiguration:
       step: NodeIndex
       progress: NodeIndex
@@ -167,7 +161,6 @@ network:
     MmrRootToSign:
       mmrRoot: Hash
       signatures: Vec<(EthereumAddress, EcdsaSignature)>
-    MultiAddress: GenericMultiAddress
     NodeIndex: u64
     OpCode: '[u8; 4; OpCode]'
     OtherAddress:
@@ -178,18 +171,14 @@ network:
       _enum:
         Eth: EcdsaSignature
         Tron: EcdsaSignature
+    OutboundLaneData: 
+      oldestUnprunedNonce: MessageNonce
+      latestGeneratedNonce: MessageNonce
+      latestReceivedNonce: MessageNonce
     PalletId: LockIdentifier
     Power: u32
     PowerOf:
       power: Power
-    ProxyAnnouncement:
-      real: AccountId
-      callHash: Hash
-      height: BlockNumber
-    ProxyDefinition:
-      delegate: AccountId
-      proxyType: ProxyType
-      delay: BlockNumber
     ProxyType:
       _enum:
         Any: 'Null'
@@ -242,6 +231,7 @@ network:
     SpanRecord:
       slashed: RKT
       paidOut: RKT
+    SpecVersion: u32
     StakingBalanceT:
       _enum:
         RingBalance: Balance
