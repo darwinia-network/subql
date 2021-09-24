@@ -59,6 +59,7 @@ network:
       lockFor: LockFor
       reasons: Reasons
     Bloom: '[u8; 256; Bloom]'
+    BridgeMessageId: '[u8; 16; BridgeMessageId]'
     ChainProperties:
       ss58Format: Option<u8>
       tokenDecimals: Option<Vec<u32>>
@@ -134,11 +135,6 @@ network:
       ringBalance: Compact<Balance>
       ktonBalance: Compact<Balance>
       power: Power
-    InitializationData:
-      authority_list: AuthorityList
-      header: Header
-      is_halted: bool
-      set_id: SetId
     KtonBalance: Balance
     LockFor:
       _enum:
@@ -175,6 +171,10 @@ network:
       _enum:
         Eth: EcdsaSignature
         Tron: EcdsaSignature
+    OutboundLaneData: 
+      oldestUnprunedNonce: MessageNonce
+      latestGeneratedNonce: MessageNonce
+      latestReceivedNonce: MessageNonce
     PalletId: LockIdentifier
     Power: u32
     PowerOf:
