@@ -8,6 +8,8 @@ export {Extrinsic} from "./Extrinsic"
 
 export {Event} from "./Event"
 
+export {S2SEvent} from "./S2SEvent"
+
 export {Account} from "./Account"
 
 export {Token} from "./Token"

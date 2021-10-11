@@ -5,9 +5,6 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: substrate/BlockHandler
-#          filter:
-#            method: Deposit
-#            module: balances
         - handler: handleEvent
           kind: substrate/EventHandler
         - handler: handleCall

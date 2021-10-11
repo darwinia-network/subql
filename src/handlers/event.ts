@@ -3,6 +3,7 @@ import { Dispatcher } from '../helpers/dispatcher';
 import { Event } from '../types/models/Event';
 import { BlockHandler } from './block';
 import { ExtrinsicHandler } from './extrinsic';
+import { S2SEventHandler } from './s2sEvent';
 import { TransferHandler } from './sub-handlers/transfer';
 
 type EventDispatch = Dispatcher<SubstrateEvent>;
@@ -117,5 +118,11 @@ export class EventHandler {
     await Promise.all(records);
 
     await TransferHandler.checkTransfer(this.event);
+
+    if (this.section === 'substrate2SubstrateBacking') {
+      const s2sEvent = new S2SEventHandler(this.event);
+      
+      await s2sEvent.save();
+    }
   }
 }
