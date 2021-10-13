@@ -255,8 +255,8 @@ network:
       startTime: Compact<TsInMs>
       expireTime: Compact<TsInMs>
     TokenOption:
-      name: "[u8; 32]"
-      symbol: "[u8; 32]"
+      name: "Vec<u32>"
+      symbol: "Vec<u32>"
       decimal: u8
     TokenInfo:
       address: H160
