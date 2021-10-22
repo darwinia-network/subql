@@ -5,10 +5,7 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: substrate/BlockHandler
-        - filter:
-            method: Deposit
-            module: balances
-          handler: handleEvent
+        - handler: handleEvent
           kind: substrate/EventHandler
         - handler: handleCall
           kind: substrate/CallHandler
@@ -129,6 +126,7 @@ network:
       ownPower: Power
       totalPower: Power
       others: Vec<IndividualExposure>
+    Fee: Balance
     H128: '[u8; 16; H128]'
     IndividualExposure:
       who: AccountId
@@ -163,6 +161,12 @@ network:
       signatures: Vec<(EthereumAddress, EcdsaSignature)>
     NodeIndex: u64
     OpCode: '[u8; 4; OpCode]'
+    Order:
+      lane: LaneId
+      message: MessageNonce
+      sent_time: BlockNumber
+      confirm_time: BlockNumber
+      assigned_relayers: Vec<PriorRelayer>
     OtherAddress:
       _enum:
         Eth: EthereumAddress
@@ -179,6 +183,17 @@ network:
     Power: u32
     PowerOf:
       power: Power
+    Priority:
+      _enum:
+        NoPriority: null
+        P1: null
+        P2: null
+        P3: null
+    PriorRelayer:
+      id: AccountId
+      priority: Priority
+      fee: Balance
+      valid_range: BlockNumber
     ProxyType:
       _enum:
         Any: 'Null'
@@ -199,6 +214,10 @@ network:
       _enum:
         Token: 'Null'
         Deposit: 'Null'
+    Relayer:
+      id: AccountId
+      collateral: Balance
+      fee: Balance
     RelayAffirmationId:
       relayHeaderId: EthereumBlockNumber
       round: u32
@@ -258,9 +277,10 @@ network:
       startTime: Compact<TsInMs>
       expireTime: Compact<TsInMs>
     TokenOption: 
-      name: "[u8; 32]"
-      symbol: "[u8; 32]"
+      name: Vec<u32>
+      symbol: Vec<u32>
       decimal: u8
+    TokenMessageId: '[u8; 16; TokenMessageId]'
     TokenInfo:
       address: H160
       value: Option<U256>
