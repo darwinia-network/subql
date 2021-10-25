@@ -10,7 +10,7 @@ dataSources:
         - handler: handleCall
           kind: substrate/CallHandler
     name: main
-    startBlock: 600000
+    startBlock: 780000
 description: ''
 network:
   endpoint: wss://pangoro-rpc.darwinia.network/
@@ -277,8 +277,8 @@ network:
       startTime: Compact<TsInMs>
       expireTime: Compact<TsInMs>
     TokenOption: 
-      name: Vec<u32>
-      symbol: Vec<u32>
+      name: Vec<u8>
+      symbol: Vec<u8>
       decimal: u8
     TokenMessageId: '[u8; 16; TokenMessageId]'
     TokenInfo:
@@ -287,7 +287,7 @@ network:
       option: Option<TokenOption>
     Token:
       _enum:
-        InvalidToken: u8
+        InvalidToken: null
         Native: TokenInfo
         Erc20: TokenInfo
     TransactionOutcome: '{}'
