@@ -183,15 +183,8 @@ network:
     Power: u32
     PowerOf:
       power: Power
-    Priority:
-      _enum:
-        NoPriority: null
-        P1: null
-        P2: null
-        P3: null
     PriorRelayer:
       id: AccountId
-      priority: Priority
       fee: Balance
       valid_range: BlockNumber
     ProxyType:
