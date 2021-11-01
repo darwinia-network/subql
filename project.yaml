@@ -126,7 +126,8 @@ network:
       ownPower: Power
       totalPower: Power
       others: Vec<IndividualExposure>
-    Fee: Balance
+    Fee: 
+      amount: Balance
     H128: '[u8; 16; H128]'
     IndividualExposure:
       who: AccountId
