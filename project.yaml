@@ -10,7 +10,7 @@ dataSources:
         - handler: handleCall
           kind: substrate/CallHandler
     name: main
-    startBlock: 526300
+    startBlock: 1100000
 description: ''
 network:
   endpoint: wss://pangolin-rpc.darwinia.network/
@@ -158,7 +158,7 @@ network:
       lastPosition: NodeIndex
     MmrRootToSign:
       mmrRoot: Hash
-      signatures: Vec<(EthereumAddress, EcdsaSignature)>
+      signatures: Vec<(AccountId, EcdsaSignature)>
     NodeIndex: u64
     OpCode: '[u8; 4; OpCode]'
     Order:
