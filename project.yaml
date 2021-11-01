@@ -126,7 +126,8 @@ network:
       ownPower: Power
       totalPower: Power
       others: Vec<IndividualExposure>
-    Fee: Balance
+    Fee: 
+      amount: Balance
     H128: '[u8; 16; H128]'
     IndividualExposure:
       who: AccountId
@@ -183,15 +184,8 @@ network:
     Power: u32
     PowerOf:
       power: Power
-    Priority:
-      _enum:
-        NoPriority: null
-        P1: null
-        P2: null
-        P3: null
     PriorRelayer:
       id: AccountId
-      priority: Priority
       fee: Balance
       valid_range: BlockNumber
     ProxyType:
@@ -277,8 +271,8 @@ network:
       startTime: Compact<TsInMs>
       expireTime: Compact<TsInMs>
     TokenOption: 
-      name: Vec<u32>
-      symbol: Vec<u32>
+      name: Vec<u8>
+      symbol: Vec<u8>
       decimal: u8
     TokenMessageId: '[u8; 16; TokenMessageId]'
     TokenInfo:
@@ -287,7 +281,7 @@ network:
       option: Option<TokenOption>
     Token: 
       _enum: 
-        InvalidToken: u8
+        InvalidToken: null
         Native: TokenInfo
         Erc20: TokenInfo
     TransactionOutcome: '{}'

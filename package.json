@@ -21,9 +21,9 @@
   "author": "sxlwar",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@polkadot/api": "^5.4.1",
-    "@subql/cli": "0.9.1",
-    "@subql/types": "0.7.1",
+    "@polkadot/api": "^6.4.2",
+    "@subql/cli": "0.13.0",
+    "@subql/types": "0.8.5",
     "prettier": "^2.2.1",
     "prettier-quick": "^0.0.5",
     "pretty-quick": "^3.1.0",
