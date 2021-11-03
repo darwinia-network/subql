@@ -10,7 +10,7 @@ dataSources:
         - handler: handleCall
           kind: substrate/CallHandler
     name: main
-    startBlock: 835500
+    startBlock: 910000
 description: ''
 network:
   endpoint: wss://pangoro-rpc.darwinia.network/
