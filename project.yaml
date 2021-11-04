@@ -56,7 +56,7 @@ network:
       lockFor: LockFor
       reasons: Reasons
     Bloom: '[u8; 256; Bloom]'
-    BridgeMessageId: '[u8; 16; BridgeMessageId]'
+    BridgeMessageId: '(LaneId, MessageNonce)'
     ChainProperties:
       ss58Format: Option<u8>
       tokenDecimals: Option<Vec<u32>>
