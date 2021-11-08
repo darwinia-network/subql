@@ -3,7 +3,7 @@ description: ""
 repository: "https://github.com/darwinia-network/subql"
 schema: ./schema.graphql
 network:
-  endpoint: wss://kusama.elara.patract.io
+  endpoint: wss://kusama.api.onfinality.io/public-ws
 dataSources:
   - name: main
     kind: substrate/Runtime
