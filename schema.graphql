@@ -46,6 +46,8 @@ type Account @entity {
   id: ID!
 
   transferTotalCount: Int
+  contributedTotalCount: Int
+  contributedTotal: BigInt
 
   extrinsics: [Extrinsic] @derivedFrom(field: "signer")
   transferIn: [Transfer] @derivedFrom(field: "to")
@@ -70,6 +72,30 @@ type Transfer @entity {
   fee: BigInt
   blockNumber: BigInt
   # TODO add index field
+
+  block: Block #create relation to block
+}
+
+type CrowdloanMemo @entity {
+  id: ID!
+
+  who: CrowdloanContributed!
+  paraId: Int!
+  memo: String!
+  timestamp: Date
+
+  block: Block #create relation to block
+}
+
+type CrowdloanContributed @entity {
+  id: ID!
+
+  who: String!
+  paraId: Int!
+  balance: BigInt!
+  timestamp: Date
+
+  memos: [CrowdloanMemo] @derivedFrom(field: "who") # create relation to CrowdloanMemo
 
   block: Block #create relation to block
 }

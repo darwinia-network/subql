@@ -3,6 +3,7 @@ import { Dispatcher } from '../helpers/dispatcher';
 import { Event } from '../types/models/Event';
 import { BlockHandler } from './block';
 import { ExtrinsicHandler } from './extrinsic';
+import { CrowdloanHandler } from './sub-handlers/contribute';
 import { TransferHandler } from './sub-handlers/transfer';
 
 type EventDispatch = Dispatcher<SubstrateEvent>;
@@ -117,5 +118,7 @@ export class EventHandler {
     await Promise.all(records);
 
     await TransferHandler.checkTransfer(this.event);
+
+    await CrowdloanHandler.check(this.event);
   }
 }
