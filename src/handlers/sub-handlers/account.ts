@@ -1,13 +1,15 @@
-import { Account } from "../../types/models/Account";
+import { Account } from '../../types/models/Account';
 
 export class AccountHandler {
   static async ensureAccount(id: string) {
     const account = await Account.get(id);
 
     if (!account) {
-      const acc =  new Account(id);
-      
-      acc.transferTotalCount = 0; 
+      const acc = new Account(id);
+
+      acc.transferTotalCount = 0;
+      acc.contributedTotalCount = 0;
+      acc.contributedTotal = BigInt(0);
       acc.save();
 
       return acc;
@@ -36,5 +38,14 @@ export class AccountHandler {
     const account = await this.getAccountById(id);
 
     await this.updateAccount(id, { transferTotalCount: account.transferTotalCount + 1 });
+  }
+
+  static async updateCrowdloanStatistic(id: string, balance: bigint) {
+    const account = await this.getAccountById(id);
+
+    await this.updateAccount(id, {
+      contributedTotalCount: account.contributedTotalCount + 1,
+      contributedTotal: account.contributedTotal + balance,
+    });
   }
 }
