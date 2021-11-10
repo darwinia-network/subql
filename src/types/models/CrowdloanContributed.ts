@@ -14,11 +14,21 @@ export class CrowdloanContributed implements Entity {
 
     public who: string;
 
-    public paraId: number;
+    public refer?: string;
 
     public balance: bigint;
 
+    public powerWho: bigint;
+
+    public powerRefer?: bigint;
+
     public timestamp?: Date;
+
+    public paraId: number;
+
+    public whoStatisticsId?: string;
+
+    public referStatisticsId?: string;
 
     public blockId?: string;
 

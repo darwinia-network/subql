@@ -79,23 +79,47 @@ type Transfer @entity {
 type CrowdloanMemo @entity {
   id: ID!
 
-  who: CrowdloanContributed!
+  who: String!
   paraId: Int!
-  memo: String!
+  memo: String
   timestamp: Date
 
   block: Block #create relation to block
 }
 
+type CrowdloanWhoStatistics @entity {
+  id: ID! # memo
+
+  user: String
+  totalBalance: BigInt!
+  totalPower: BigInt!
+
+  contributors: [CrowdloanContributed] @derivedFrom(field: "whoStatistics")
+}
+
+type CrowdloanReferStatistics @entity {
+  id: ID!
+
+  user: String!
+  totalBalance: BigInt!
+  totalPower: BigInt!
+
+  contributors: [CrowdloanContributed] @derivedFrom(field: "referStatistics")
+}
+
 type CrowdloanContributed @entity {
   id: ID!
 
-  who: String!
-  paraId: Int!
+  who: String! # 被邀请人
+  refer: String # 邀请人 = memo
   balance: BigInt!
+  powerWho: BigInt! # balance * (block < BLOCK ? 1.2 : 1.0) * (refer == nil ? 1.0 : 1.05)
+  powerRefer: BigInt # balance * (block < BLOCK ? 1.2 : 1.0) * (refer == nil ? 0 : 0.05)
+
   timestamp: Date
+  paraId: Int!
 
-  memos: [CrowdloanMemo] @derivedFrom(field: "who") # create relation to CrowdloanMemo
-
-  block: Block #create relation to block
+  whoStatistics: CrowdloanWhoStatistics
+  referStatistics: CrowdloanReferStatistics 
+  block: Block
 }
