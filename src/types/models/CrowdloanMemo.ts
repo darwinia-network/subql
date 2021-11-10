@@ -12,11 +12,11 @@ export class CrowdloanMemo implements Entity {
 
     public id: string;
 
-    public whoId: string;
+    public who: string;
 
     public paraId: number;
 
-    public memo: string;
+    public memo?: string;
 
     public timestamp?: Date;
 

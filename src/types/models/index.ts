@@ -16,5 +16,9 @@ export {Transfer} from "./Transfer"
 
 export {CrowdloanMemo} from "./CrowdloanMemo"
 
+export {CrowdloanWhoStatistics} from "./CrowdloanWhoStatistics"
+
+export {CrowdloanReferStatistics} from "./CrowdloanReferStatistics"
+
 export {CrowdloanContributed} from "./CrowdloanContributed"
 
