@@ -1,6 +1,7 @@
 import { SubstrateBlock } from '@subql/types';
 import { getBlockTimestamp } from '../helpers';
 import { Block } from '../types/models/Block';
+import { TransferHandler } from './sub-handlers/transfer';
 
 export class BlockHandler {
   private block: SubstrateBlock;
@@ -46,5 +47,8 @@ export class BlockHandler {
     block.parentHash = this.parentHash;
 
     await block.save();
+
+    // FIXME: the transfer records contains both failed and success. Move to extrinsics?
+    await TransferHandler.checkTransfer(this.block);
   }
 }

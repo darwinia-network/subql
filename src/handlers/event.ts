@@ -117,8 +117,6 @@ export class EventHandler {
 
     await Promise.all(records);
 
-    await TransferHandler.checkTransfer(this.event);
-
     if (this.section === 'substrate2SubstrateBacking') {
       const s2sEvent = new S2SEventHandler(this.event);
       
