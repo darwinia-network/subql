@@ -3,7 +3,6 @@ import { Dispatcher } from '../helpers/dispatcher';
 import { Event } from '../types/models/Event';
 import { BlockHandler } from './block';
 import { ExtrinsicHandler } from './extrinsic';
-import { TransferHandler } from './sub-handlers/transfer';
 
 type EventDispatch = Dispatcher<SubstrateEvent>;
 
@@ -115,7 +114,5 @@ export class EventHandler {
       .filter((item) => !!item);
 
     await Promise.all(records);
-
-    await TransferHandler.checkTransfer(this.event);
   }
 }

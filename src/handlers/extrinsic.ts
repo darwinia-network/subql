@@ -85,8 +85,6 @@ export class ExtrinsicHandler {
     await BlockHandler.ensureBlock(this.blockHash);
     await AccountHandler.ensureAccount(this.signer);
 
-    const data = this.extrinsic.extrinsic.toHuman();
-
     record.method = this.method;
     record.section = this.section;
     record.args = this.args;
