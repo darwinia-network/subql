@@ -5,10 +5,7 @@ dataSources:
       handlers:
         - handler: handleBlock
           kind: substrate/BlockHandler
-        - filter:
-            method: Deposit
-            module: balances
-          handler: handleEvent
+        - handler: handleEvent
           kind: substrate/EventHandler
         - handler: handleCall
           kind: substrate/CallHandler
@@ -60,11 +57,11 @@ network:
       id: LockIdentifier
       lockFor: LockFor
       reasons: Reasons
-    BlockNumberFor: BlockNumber
     Bloom: '[u8; 256; Bloom]'
     BridgedBlockHash: MillauBlockHash
     BridgedBlockNumber: MillauBlockNumber
     BridgedHeader: MillauHeader
+    BridgeMessageId: '(LaneId, MessageNonce)'
     BridgedOpaqueCall: Vec<u8>
     CallOrigin:
       _enum:
@@ -150,7 +147,8 @@ network:
       ownPower: Power
       totalPower: Power
       others: Vec<IndividualExposure>
-    Fee: MillauBalance
+    Fee:
+      amount: Balance
     GrandpaJustification:
       round: u64
       commit: Commit
@@ -171,11 +169,6 @@ network:
       ringBalance: Compact<Balance>
       ktonBalance: Compact<Balance>
       power: Power
-    InitializationData:
-      authority_list: AuthorityList
-      header: Header
-      is_halted: bool
-      set_id: SetId
     KtonBalance: Balance
     LaneId: Id
     LockFor:
@@ -243,7 +236,7 @@ network:
       lastPosition: NodeIndex
     MmrRootToSign:
       mmrRoot: Hash
-      signatures: Vec<(EthereumAddress, EcdsaSignature)>
+      signatures: Vec<(AccountId, EcdsaSignature)>
     MultiSigner:
       _enum:
         Ed25519: H256
@@ -251,6 +244,12 @@ network:
         Ecdsa: '[u8;33]'
     NodeIndex: u64
     OpCode: '[u8; 4; OpCode]'
+    Order:
+      lane: LaneId
+      message: MessageNonce
+      sent_time: BlockNumber
+      confirm_time: BlockNumber
+      assigned_relayers: Vec<PriorRelayer>
     OtherAddress:
       _enum:
         Eth: EthereumAddress
@@ -260,9 +259,9 @@ network:
         Eth: EcdsaSignature
         Tron: EcdsaSignature
     OutboundLaneData:
-      latest_generated_nonce: MessageNonce
-      latest_received_nonce: MessageNonce
-      oldest_unpruned_nonce: MessageNonce
+      oldestUnprunedNonce: MessageNonce
+      latestGeneratedNonce: MessageNonce
+      latestReceivedNonce: MessageNonce
     OutboundMessageFee: Fee
     OutboundPayload:
       spec_version: SpecVersion
@@ -276,17 +275,13 @@ network:
     Power: u32
     PowerOf:
       power: Power
+    PriorRelayer:
+      id: AccountId
+      fee: Balance
+      valid_range: BlockNumber
     Precommit:
       target_hash: BridgedBlockHash
       target_number: BridgedBlockNumber
-    ProxyAnnouncement:
-      real: AccountId
-      callHash: Hash
-      height: BlockNumber
-    ProxyDefinition:
-      delegate: AccountId
-      proxyType: ProxyType
-      delay: BlockNumber
     ProxyType:
       _enum:
         Any: 'Null'
@@ -308,6 +303,10 @@ network:
       _enum:
         Token: 'Null'
         Deposit: 'Null'
+    Relayer:
+      id: AccountId
+      collateral: Balance
+      fee: Balance
     RelayAffirmationId:
       relayHeaderId: EthereumBlockNumber
       round: u32
@@ -369,6 +368,13 @@ network:
         Reserved: 'Null'
     StorageProofItem: Vec<u8>
     Term: BlockNumber
+    TokenMessageId: '[u8; 16; TokenMessageId]'
+    TokenMetadata:
+      tokenType: u32
+      address: H160
+      name: Vec<u8>
+      symbol: Vec<u8>
+      decimal: u8
     TimeDepositItem:
       value: Compact<Balance>
       startTime: Compact<TsInMs>
