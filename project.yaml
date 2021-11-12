@@ -3,11 +3,11 @@ description: ""
 repository: ""
 schema: ./schema.graphql
 network:
-  endpoint: wss://polkadot.api.onfinality.io/public-ws
+  endpoint: wss://pub.elara.patract.io/polkadot
 dataSources:
   - name: main
     kind: substrate/Runtime
-    startBlock: 7562000
+    startBlock: 7663500
     mapping:
       handlers:
         - handler: handleBlock
