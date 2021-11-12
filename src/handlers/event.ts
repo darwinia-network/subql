@@ -90,12 +90,9 @@ export class EventHandler {
         event.extrinsicId = this.extrinsicHash;
       }
 
-      await this.dispatcher.dispatch(`${this.section}-${this.method}`, this.event);
-
       await event.save();
     };
 
-    // await saveEvent({ id: this.id, index: this.index, method: this.method, data: this.data, section: this.section });
 
     const records = this.events
       .map((item, index) => {

@@ -7,17 +7,15 @@ import {
 } from '../../types';
 import { AccountHandler } from './account';
 
-const START_BLOCK = BigInt(9473310);
+const START_BLOCK = BigInt(8263710);
 
 export class CrowdloanHandler {
   static async check({ event, block: { events, timestamp, block } }: SubstrateEvent) {
-    const target = events.find((item) => item.event.section === 'crowdloan');
-
-    if (!target) {
+    if (event.section !== 'crowdloan') {
       return;
     }
 
-    const { data, method } = target.event;
+    const { data, method } = event;
 
     if (method === 'MemoUpdated') {
       const [account, paraId, memo] = JSON.parse(data.toString());
@@ -41,7 +39,7 @@ export class CrowdloanHandler {
       const [account, paraId, amount] = JSON.parse(data.toString()) as [string, number, number];
 
       if (paraId !== 2003) {
-        return;  
+        return;
       }
 
       const balance = BigInt(amount);
