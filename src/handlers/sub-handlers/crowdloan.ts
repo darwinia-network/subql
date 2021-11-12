@@ -39,6 +39,11 @@ export class CrowdloanHandler {
 
     if (method === 'Contributed') {
       const [account, paraId, amount] = JSON.parse(data.toString()) as [string, number, number];
+
+      if (paraId !== 2003) {
+        return;  
+      }
+
       const balance = BigInt(amount);
 
       await AccountHandler.ensureAccount(account);
