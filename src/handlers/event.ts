@@ -1,22 +1,14 @@
 import { SubstrateEvent } from '@subql/types';
-import { Dispatcher } from '../helpers/dispatcher';
 import { Event } from '../types/models/Event';
 import { BlockHandler } from './block';
 import { ExtrinsicHandler } from './extrinsic';
 import { CrowdloanHandler } from './sub-handlers/crowdloan';
-import { TransferHandler } from './sub-handlers/transfer';
-
-type EventDispatch = Dispatcher<SubstrateEvent>;
 
 export class EventHandler {
   private event: SubstrateEvent;
-  private dispatcher: EventDispatch;
 
   constructor(event: SubstrateEvent) {
     this.event = event;
-    this.dispatcher = new Dispatcher();
-
-    this.dispatcher.batchRegister([]);
   }
 
   get index() {
@@ -62,60 +54,36 @@ export class EventHandler {
   }
 
   public async save() {
+    if (
+      this.section !== 'crowdloan' ||
+      this.section === 'crowdloan' ||
+      this.method === 'create'
+    ) {
+      return;
+    }
+
     await BlockHandler.ensureBlock(this.blockHash);
 
     if (this.extrinsicHash) {
       await ExtrinsicHandler.ensureExtrinsic(this.extrinsicHash);
     }
 
-    const saveEvent = async (source: {
-      id: string;
-      index: number;
-      section: string;
-      method: string;
-      data: string;
-    }): Promise<void> => {
-      const { id, index, section, method, data } = source;
-      const event = new Event(id);
+    const event = new Event(this.id);
 
-      event.index = index;
-      event.section = section;
-      event.method = method;
-      event.data = data;
+    event.index = this.index;
+    event.section = this.section;
+    event.method = this.method;
+    event.data = this.data;
 
-      event.blockId = this.blockHash;
-      event.timestamp = this.timestamp;
+    event.blockId = this.blockHash;
+    event.timestamp = this.timestamp;
 
-      if (this.extrinsicHash) {
-        event.extrinsicId = this.extrinsicHash;
-      }
+    if (this.extrinsicHash) {
+      event.extrinsicId = this.extrinsicHash;
+    }
 
-      await event.save();
-    };
-
-
-    const records = this.events
-      .map((item, index) => {
-        const { event } = item;
-
-        if (event.method === 'ExtrinsicSuccess') {
-          return null;
-        }
-
-        return saveEvent({
-          id: `${this.blockNumber}-${index}`,
-          section: event.section,
-          data: event.data.toString(),
-          method: event.method,
-          index,
-        });
-      })
-      .filter((item) => !!item);
-
-    await Promise.all(records);
-
-    await TransferHandler.checkTransfer(this.event);
-
+    await event.save();
+    
     await CrowdloanHandler.check(this.event);
   }
 }

@@ -10,11 +10,7 @@ import { AccountHandler } from './account';
 const START_BLOCK = BigInt(8263710);
 
 export class CrowdloanHandler {
-  static async check({ event, block: { events, timestamp, block } }: SubstrateEvent) {
-    if (event.section !== 'crowdloan') {
-      return;
-    }
-
+  static async check({ event, block: { timestamp, block } }: SubstrateEvent) {
     const { data, method } = event;
 
     if (method === 'MemoUpdated') {
