@@ -1,21 +1,14 @@
 import { SubstrateEvent } from '@subql/types';
-import { Dispatcher } from '../helpers/dispatcher';
 import { Event } from '../types/models/Event';
 import { BlockHandler } from './block';
 import { ExtrinsicHandler } from './extrinsic';
 import { TransferHandler } from './sub-handlers/transfer';
 
-type EventDispatch = Dispatcher<SubstrateEvent>;
-
 export class EventHandler {
   private event: SubstrateEvent;
-  private dispatcher: EventDispatch;
 
   constructor(event: SubstrateEvent) {
     this.event = event;
-    this.dispatcher = new Dispatcher();
-
-    this.dispatcher.batchRegister([]);
   }
 
   get index() {
@@ -89,12 +82,8 @@ export class EventHandler {
         event.extrinsicId = this.extrinsicHash;
       }
 
-      await this.dispatcher.dispatch(`${this.section}-${this.method}`, this.event);
-
       await event.save();
     };
-
-    // await saveEvent({ id: this.id, index: this.index, method: this.method, data: this.data, section: this.section });
 
     const records = this.events
       .map((item, index) => {
