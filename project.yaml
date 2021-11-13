@@ -3,7 +3,7 @@ description: ""
 repository: ""
 schema: ./schema.graphql
 network:
-  endpoint: wss://pub.elara.patract.io/polkadot
+  endpoint: wss://polkadot.api.onfinality.io/ws?apikey=afc63a74-2404-4aef-899c-5b77b86c1393
 dataSources:
   - name: main
     kind: substrate/Runtime

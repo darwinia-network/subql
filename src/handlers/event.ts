@@ -56,8 +56,7 @@ export class EventHandler {
   public async save() {
     if (
       this.section !== 'crowdloan' ||
-      this.section === 'crowdloan' ||
-      this.method === 'create'
+      (this.section === 'crowdloan' && this.method === 'create')
     ) {
       return;
     }
@@ -83,7 +82,7 @@ export class EventHandler {
     }
 
     await event.save();
-    
+
     await CrowdloanHandler.check(this.event);
   }
 }
