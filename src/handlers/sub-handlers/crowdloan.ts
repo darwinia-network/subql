@@ -46,6 +46,9 @@ export class CrowdloanHandler {
     block: { timestamp, block },
   }: Pick<SubstrateEvent, 'event' | 'block'>) {
     const [account, paraId, memo] = JSON.parse(data.toString());
+    if (paraId !== 2003) {
+      return;
+    }
 
     const instance = new CrowdloanMemo(account);
 
