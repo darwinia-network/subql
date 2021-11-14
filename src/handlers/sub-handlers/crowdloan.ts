@@ -35,8 +35,6 @@ export class CrowdloanHandler {
 
       if (memoEvent) {
         await this.handleMemoUpdate({ event: memoEvent.event, block });
-      } else {
-        logger('Can not find MemoUpdated event in block ', block.block.header.number.toString());
       }
     }
   }
