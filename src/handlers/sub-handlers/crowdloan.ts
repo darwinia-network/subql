@@ -1,4 +1,4 @@
-import { SubstrateEvent } from '@subql/types';
+import { SubstrateBlock, SubstrateEvent } from '@subql/types';
 import {
   CrowdloanContributed,
   CrowdloanMemo,
@@ -10,72 +10,105 @@ import { AccountHandler } from './account';
 const START_BLOCK = BigInt(8263710);
 
 export class CrowdloanHandler {
-  static async check({ event, block: { timestamp, block } }: SubstrateEvent) {
-    const { data, method } = event;
+  static async check(substrateEvent: SubstrateEvent) {
+    const {
+      event: { method },
+    } = substrateEvent;
 
     if (method === 'MemoUpdated') {
-      const [account, paraId, memo] = JSON.parse(data.toString());
-
-      const instance = new CrowdloanMemo(account);
-
-      instance.who = account;
-      instance.paraId = paraId;
-      instance.memo = memo;
-      instance.timestamp = timestamp;
-      instance.blockId = block.hash.toString();
-
-      try {
-        await instance.save();
-      } catch (error) {
-        logger('CrowdloanHandler error method: ', method);
-      }
+      this.handleMemoUpdate(substrateEvent);
     }
 
     if (method === 'Contributed') {
-      const [account, paraId, amount] = JSON.parse(data.toString()) as [string, number, number];
+      await this.ensureMemoUpdated(substrateEvent);
 
-      if (paraId !== 2003) {
-        return;
+      this.handleContributed(substrateEvent);
+    }
+  }
+
+  static async ensureMemoUpdated({ event, block }: SubstrateEvent) {
+    const [account] = JSON.parse(event.data.toString()) as [string, number, number];
+    const target = await CrowdloanMemo.get(account);
+
+    if (!target) {
+      const memoEvent = block.events.find((item) => item.event.method === 'MemoUpdated');
+
+      if (memoEvent) {
+        await this.handleMemoUpdate({ event: memoEvent.event, block });
+      } else {
+        logger('Can not find MemoUpdated event in block ', block.block.header.number.toString());
       }
+    }
+  }
 
-      const balance = BigInt(amount);
+  static async handleMemoUpdate({
+    event: { data, method },
+    block: { timestamp, block },
+  }: Pick<SubstrateEvent, 'event' | 'block'>) {
+    const [account, paraId, memo] = JSON.parse(data.toString());
 
-      await AccountHandler.ensureAccount(account);
-      await AccountHandler.updateCrowdloanStatistic(account, balance);
+    const instance = new CrowdloanMemo(account);
 
-      const refer = (await CrowdloanMemo.get(account))?.memo || null;
-      const rewardEarly =
-        block.header.number.toBigInt() < START_BLOCK ? balance / BigInt(5) : BigInt(0);
-      const powerBase = balance + rewardEarly;
-      const powerWho = powerBase + (!refer ? BigInt(0) : powerBase / BigInt(20));
-      const powerRefer = !refer ? BigInt(0) : powerBase / BigInt(20);
-      const instance = new CrowdloanContributed(block.hash.toString());
+    instance.who = account;
+    instance.paraId = paraId;
+    instance.memo = memo;
+    instance.timestamp = timestamp;
+    instance.blockId = block.hash.toString();
 
-      await CrowdloanWho.ensure(account);
-      await CrowdloanWho.update(account, balance, powerWho);
+    try {
+      await instance.save();
+    } catch (error) {
+      logger('CrowdloanHandler error method: ', method);
+    }
+  }
 
-      if (refer) {
-        instance.referStatisticsId = refer;
+  static async handleContributed({
+    event: { data, method },
+    block: { timestamp, block },
+  }: SubstrateEvent) {
+    const [account, paraId, amount] = JSON.parse(data.toString()) as [string, number, number];
 
-        await CrowdloanRefer.ensure(refer);
-        await CrowdloanRefer.update(refer, balance, powerRefer);
-      }
+    if (paraId !== 2003) {
+      return;
+    }
 
-      instance.who = account;
-      instance.refer = refer;
-      instance.balance = balance;
-      instance.powerWho = powerWho;
-      instance.powerRefer = powerRefer;
-      instance.paraId = paraId;
-      instance.timestamp = timestamp;
-      instance.whoStatisticsId = account;
-      instance.blockId = block.hash.toString();
+    const balance = BigInt(amount);
 
-      try {
-        await instance.save();
-      } catch (error) {
-        logger('CrowdloanHandler error method: ', method);
-      }
+    await AccountHandler.ensureAccount(account);
+    await AccountHandler.updateCrowdloanStatistic(account, balance);
+
+    const refer = (await CrowdloanMemo.get(account))?.memo || null;
+    const rewardEarly =
+      block.header.number.toBigInt() < START_BLOCK ? balance / BigInt(5) : BigInt(0);
+    const powerBase = balance + rewardEarly;
+    const powerWho = powerBase + (!refer ? BigInt(0) : powerBase / BigInt(20));
+    const powerRefer = !refer ? BigInt(0) : powerBase / BigInt(20);
+    const instance = new CrowdloanContributed(block.hash.toString());
+
+    await CrowdloanWho.ensure(account);
+    await CrowdloanWho.update(account, balance, powerWho);
+
+    if (refer) {
+      instance.referStatisticsId = refer;
+
+      await CrowdloanRefer.ensure(refer);
+      await CrowdloanRefer.update(refer, balance, powerRefer);
+    }
+
+    instance.who = account;
+    instance.refer = refer;
+    instance.balance = balance;
+    instance.powerWho = powerWho;
+    instance.powerRefer = powerRefer;
+    instance.paraId = paraId;
+    instance.timestamp = timestamp;
+    instance.whoStatisticsId = account;
+    instance.blockId = block.hash.toString();
+
+    try {
+      await instance.save();
+    } catch (error) {
+      logger('CrowdloanHandler error method: ', method);
     }
   }
 }
