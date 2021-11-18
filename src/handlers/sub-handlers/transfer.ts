@@ -1,5 +1,4 @@
 import { SubstrateEvent } from '@subql/types';
-import { TOKEN_DECIMAL } from '../../helpers';
 import { Transfer } from '../../types/models/Transfer';
 import { BlockHandler } from '../block';
 import { AccountHandler } from './account';
@@ -11,11 +10,7 @@ enum FeePosition {
 }
 
 export class TransferHandler {
-  static async checkTransfer({ event, block: { events, timestamp, block } }: SubstrateEvent) {
-    if (event.method !== 'Transfer') {
-      return;
-    }
-
+  static async check({ event, block: { events, timestamp, block } }: SubstrateEvent) {
     const { data, section } = event;
     const [from, to, amount] = JSON.parse(data.toString());
 
