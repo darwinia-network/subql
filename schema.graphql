@@ -42,6 +42,21 @@ type Event @entity {
   extrinsic: Extrinsic #create relation to extrinsic
 }
 
+type S2SEvent @entity {
+  id: ID! # messageId
+  laneId: String!
+  nonce: BigInt!
+  requestTxHash: String! # TokenLocked tx hash
+  responseTxHash: String # TokenLockedConfirmed tx hash
+  sender: String!
+  result: Int! # 0 TokenLocked 1 TokenLockedConfirmed success 2 TokenLockedConfirmed fail
+  recipient: String!
+  token: String! # token address
+  amount: String!
+  startTimestamp: Date!
+  endTimestamp: Date
+}
+
 type Account @entity {
   id: ID!
 
