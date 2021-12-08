@@ -10,7 +10,7 @@ dataSources:
         - handler: handleCall
           kind: substrate/CallHandler
     name: main
-    startBlock: 6157950
+    startBlock: 6000000
 description: ''
 network:
   endpoint: wss://rpc.darwinia.network/
